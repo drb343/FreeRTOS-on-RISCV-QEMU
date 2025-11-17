@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "tasks.h"
+#include "uart.h"
 
 extern void freertos_risc_v_trap_handler(void);
 
@@ -13,8 +14,13 @@ int main(void)
     /* Set trap handler (required for scheduler & timer interrupts) */
     __asm__ volatile ( "csrw mtvec, %0" : : "r" ( freertos_risc_v_trap_handler ) );
 
+    //Initialize UART
+    uart_init();
+
+
     /* Create user task */
     xTaskCreate(vHeartbeatTask, "HeartbeatTask", 1000, NULL, 1, NULL);
+    xTaskCreate(uart_txt_test, "UARTTask", 1000, NULL, 1, NULL);
 
     /* Start the scheduler */
     vTaskStartScheduler();

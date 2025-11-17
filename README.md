@@ -15,3 +15,8 @@ The UART is implemented using memory-mapped I/O, PLIC interrupt routing, and Fre
 - GDB debugging support with QEMU (`-s -S`)
 
 ## Build
+- make clean
+- make
+
+## Launch QEMU with UART0 mapped to terminal
+- qemu-system-riscv32 -M virt -m 128M -nographic -bios none -kernel build/RTOSDemo.axf
